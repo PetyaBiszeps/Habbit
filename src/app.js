@@ -11,7 +11,9 @@ const createWindow = () => {
         height: 600,
         icon: "src/assets/ico/Icon.png",
         webPreferences: {
-            //preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true,
+            nodeIntegration: false,
         },
     });
 
@@ -35,4 +37,3 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
-
