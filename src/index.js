@@ -6,61 +6,6 @@ let globalActiveHabitId;
 
 renderReactApp();
 
-const page = {
-    menu: document.querySelector('.menu__list'),
-    menuAdd: document.querySelector('.menu__add'),
-    popup: {
-        index: document.getElementById('add-habit-popup'),
-        iconField: document.querySelector('.popup__form input[name="icon"]'),
-        iconSelect: document.querySelector('.icon-select'),
-        form: document.querySelector('.popup__form'),
-        close: document.querySelector('.popup__close'),
-    }
-}
-
-/* --------------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------------- */
-
-/* Utils */
-
-function resetForm(form, fields) {
-    for (const field of fields) {
-        form[field].value = '';
-    }
-}
-
-function validateAndGetFormData(form, fields) {
-    const formData = new FormData(form);
-    const res = {};
-
-    for (const field of fields) {
-        const fieldValue = formData.get(field);
-
-        form[field].classList.remove('error');
-
-        if (!fieldValue) {
-            form[field].classList.add('error');
-        }
-
-        res[field] = fieldValue;
-    }
-
-    let isValid = true;
-
-    for (const field of fields) {
-        if (!res[field]) {
-            isValid = false;
-        }
-    }
-
-    if (!isValid) {
-        return;
-    }
-
-    return res;
-}
-
 /* --------------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------------- */
@@ -88,6 +33,7 @@ function renderReactApp(activeHabitId = globalActiveHabitId) {
         onDeleteHabit: deleteHabit,
         onDeleteDay: deleteDays,
         onAddDay: addDays,
+        onAddHabit: addHabit,
     });
 }
 
@@ -140,30 +86,8 @@ function deleteDays(index) {
 /* --------------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------------- */
 
-/* Popup Window */
-
-function togglePopup() {
-    if (page.popup.index.classList.contains('cover_hidden')) {
-        page.popup.index.classList.remove('cover_hidden');
-    } else {
-        page.popup.index.classList.add('cover_hidden');
-    }
-}
-
-function setIcon(context, icon) {
-    page.popup.iconField.value = icon;
-
-    const activeIcon = document.querySelector('.icon.icon_active');
-    activeIcon.classList.remove('icon_active');
-    context.classList.add('icon_active');
-}
-
-function addHabit(event) {
-    event.preventDefault();
-
-    const data = validateAndGetFormData(event.target, ['name', 'icon', 'target']);
-
-    if (!data) {
+function addHabit({name, target, icon}) {
+    if (!name || !target || !icon) {
         return;
     }
 
@@ -171,14 +95,12 @@ function addHabit(event) {
 
     habits.push({
         id: maxId + 1,
-        name: data.name,
-        target: data.target,
-        icon: data.icon,
+        name,
+        target,
+        icon,
         days: []
     });
 
-    resetForm(event.target, ['name', 'target']);
-    togglePopup();
     saveHabits(habits);
     rerender(maxId + 1);
 }
@@ -200,37 +122,9 @@ function deleteHabit() {
     saveHabits(habits);
 }
 
-/* --------------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------------- */
-
-/* Events */
-
-function bindEvents() {
-    page.menuAdd.addEventListener('click', togglePopup);
-    page.popup.form.addEventListener('submit', addHabit);
-    page.popup.close.addEventListener('click', togglePopup);
-
-    page.popup.iconSelect.addEventListener('click', event => {
-        const button = event.target.closest('.icon');
-
-        if (!button) {
-            return;
-        }
-
-        setIcon(button, button.dataset.icon);
-    });
-
-}
-
-/* --------------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------------- */
-
 /* Init */
 
 (() => {
-    bindEvents();
     seedDefaults();
     habits = loadHabits();
 
@@ -239,7 +133,9 @@ function bindEvents() {
 
     if (urlHabit) {
         rerender(urlHabit.id);
-    } else {
+    } else if (habits.length > 0) {
         rerender(habits[0].id);
+    } else {
+        renderReactApp(undefined);
     }
 })();

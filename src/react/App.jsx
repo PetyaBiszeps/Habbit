@@ -1,8 +1,9 @@
 import { AddDayForm } from './components/AddDayForm.jsx';
+import { AddHabitModal } from './components/AddHabitModal.jsx';
 import { HabitDetails } from './components/HabitDetails.jsx';
 import { HabitList } from './components/HabitList.jsx';
 
-export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay, onAddDay }) {
+export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay, onAddDay, onAddHabit }) {
     const activeHabit = habits.find(habit => habit.id === activeHabitId) ?? null;
 
     return (
@@ -17,9 +18,7 @@ export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, 
                             onSelectHabit={onSelectHabit}
                         />
                     </div>
-                    <button className="menu__add">
-                        <img alt="Add" src="svg/Add.svg" />
-                    </button>
+                    <AddHabitModal onAddHabit={onAddHabit} />
                 </nav>
             </div>
             <div className="content">
@@ -34,32 +33,6 @@ export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, 
                         onAddDay={onAddDay}
                     />
                 </HabitDetails>
-            </div>
-            <div className="cover cover_hidden" id="add-habit-popup">
-                <div className="popup">
-                    <h2>New Habit</h2>
-                    <div className="icon-label">Icon</div>
-                    <div className="icon-select">
-                        <button className="icon icon_active" data-icon="Sport">
-                            <img alt="Sport" src="svg/Sport.svg" />
-                        </button>
-                        <button className="icon" data-icon="Water">
-                            <img alt="Water" src="svg/Water.svg" />
-                        </button>
-                        <button className="icon" data-icon="Food">
-                            <img alt="Food" src="svg/Food.svg" />
-                        </button>
-                    </div>
-                    <form className="popup__form">
-                        <input name="name" placeholder="Name" type="text" />
-                        <input hidden name="icon" placeholder="icon" type="text" defaultValue="Sport" />
-                        <input name="target" placeholder="Goal" type="number" />
-                        <button className="button" type="submit">Add</button>
-                    </form>
-                    <button className="popup__close">
-                        <img alt="Close popup" src="svg/Close.svg" />
-                    </button>
-                </div>
             </div>
         </div>
     );
