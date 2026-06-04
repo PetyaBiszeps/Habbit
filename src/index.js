@@ -1,5 +1,7 @@
-import './react/main.jsx';
+import { mountReactShell } from './react/main.jsx';
 import { loadHabits, saveHabits, seedDefaults } from './habitStorage.js';
+
+mountReactShell();
 
 let habits = [];
 let globalActiveHabitId;

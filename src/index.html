@@ -11,71 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="app">
-    <div class="panel">
-        <div class="logo" id="react-root"></div>
-        <nav class="menu">
-            <div class="menu__list"></div>
-            <button class="menu__add">
-                <img alt="Add" src="svg/Add.svg">
-            </button>
-        </nav>
-    </div>
-    <div class="content">
-        <header>
-            <h1 class="h1">-</h1>
-            <div class="progress">
-                <div class="progress__text">
-                    <p class="progress__name">Progress</p>
-                    <p class="progress__percent">%</p>
-                </div>
-                <div class="progress__bar">
-                    <div class="progress__cover_bar"></div>
-                </div>
-            </div>
-        </header>
-        <main>
-            <div id="days"></div>
-            <div class="habit">
-                <div class="habit__day">Day 2</div>
-                <form class="habit__form">
-                    <input class="input_icon" name="comment" placeholder="Comment" type="text">
-                    <img alt="Comment logo" class="input__icon" src="svg/Comment.svg">
-                    <button class="button" type="submit">Submit</button>
-                </form>
-            </div>
-        </main>
-        <footer>
-            <button class="del-button">Delete habit</button>
-        </footer>
-    </div>
-    <div class="cover cover_hidden" id="add-habit-popup">
-        <div class="popup">
-            <h2>New Habit</h2>
-            <div class="icon-label">Icon</div>
-            <div class="icon-select">
-                <button class="icon icon_active" data-icon="Sport">
-                    <img alt="Sport" src="svg/Sport.svg">
-                </button>
-                <button class="icon" data-icon="Water">
-                    <img alt="Water" src="svg/Water.svg">
-                </button>
-                <button class="icon" data-icon="Food">
-                    <img alt="Food" src="svg/Food.svg">
-                </button>
-            </div>
-            <form class="popup__form">
-                <input name="name" placeholder="Name" type="text">
-                <input hidden name="icon" placeholder="icon" type="text" value="Sport">
-                <input name="target" placeholder="Goal" type="number">
-                <button class="button" type="submit">Add</button>
-            </form>
-            <button class="popup__close">
-                <img alt="Close popup" src="svg/Close.svg">
-            </button>
-        </div>
-    </div>
-</div>
+<div id="react-root"></div>
 
 <script type="module" src="index.js"></script>
 </body>
