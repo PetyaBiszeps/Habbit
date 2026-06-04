@@ -1,5 +1,10 @@
-const {app, BrowserWindow} = require('electron');
-const path = require('node:path');
+import { app, BrowserWindow } from 'electron';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 const rendererDevUrl = process.env.VITE_DEV_SERVER_URL;
 
@@ -11,7 +16,9 @@ const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 1024,
         height: 600,
-        icon: "src/assets/ico/Icon.png",
+        icon: rendererDevUrl
+            ? path.join(process.cwd(), 'src/assets/ico/Icon.png')
+            : path.join(__dirname, '../renderer/ico/Icon.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
@@ -22,7 +29,7 @@ const createWindow = () => {
     if (rendererDevUrl) {
         mainWindow.loadURL(rendererDevUrl);
     } else {
-        mainWindow.loadFile(path.join(__dirname, '../dist/renderer/index.html'));
+        mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
     }
 
     //mainWindow.webContents.openDevTools();

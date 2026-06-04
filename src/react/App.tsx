@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
-import { loadHabits, saveHabits, seedDefaults } from '../habitStorage.js';
-import { AddDayForm } from './components/AddDayForm.jsx';
-import { AddHabitModal } from './components/AddHabitModal.jsx';
-import { HabitDetails } from './components/HabitDetails.jsx';
-import { HabitList } from './components/HabitList.jsx';
+import { loadHabits, saveHabits, seedDefaults } from '../habitStorage';
+import { AddDayForm } from './components/AddDayForm';
+import { AddHabitModal } from './components/AddHabitModal';
+import { HabitDetails } from './components/HabitDetails';
+import { HabitList } from './components/HabitList';
+import type { AddDayPayload, AddHabitPayload, Habit } from './types';
 
-function loadInitialState() {
+type AppState = {
+    habits: Habit[];
+    activeHabitId?: number;
+};
+
+function loadInitialState(): AppState {
     seedDefaults();
 
     const habits = loadHabits();
@@ -18,7 +24,7 @@ function loadInitialState() {
     };
 }
 
-function setLocationHash(activeHabitId) {
+function setLocationHash(activeHabitId: number | undefined) {
     if (activeHabitId !== undefined) {
         document.location.replace(document.location.pathname + '#' + activeHabitId);
     }
@@ -33,7 +39,7 @@ export function App() {
         setLocationHash(activeHabitId);
     }, [activeHabitId]);
 
-    function selectHabit(habitId) {
+    function selectHabit(habitId: number) {
         const activeHabit = habits.find(habit => habit.id === habitId);
 
         if (!activeHabit) {
@@ -43,7 +49,7 @@ export function App() {
         setState(current => ({...current, activeHabitId: activeHabit.id}));
     }
 
-    function addHabit({name, target, icon}) {
+    function addHabit({name, target, icon}: AddHabitPayload) {
         if (!name || !target || !icon) {
             return;
         }
@@ -84,7 +90,7 @@ export function App() {
         });
     }
 
-    function addDay({comment}) {
+    function addDay({comment}: AddDayPayload) {
         if (!comment || activeHabitId === undefined) {
             return;
         }
@@ -110,7 +116,7 @@ export function App() {
         });
     }
 
-    function deleteDay(dayIndex) {
+    function deleteDay(dayIndex: number) {
         if (activeHabitId === undefined) {
             return;
         }

@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import type { AddDayPayload } from '../types';
 
-export function AddDayForm({ dayNumber, disabled, onAddDay }) {
+type AddDayFormProps = {
+    dayNumber: number;
+    disabled: boolean;
+    onAddDay: (payload: AddDayPayload) => void;
+};
+
+export function AddDayForm({ dayNumber, disabled, onAddDay }: AddDayFormProps) {
     const [comment, setComment] = useState('');
     const [hasError, setHasError] = useState(false);
 
-    function handleSubmit(event) {
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         if (!comment) {

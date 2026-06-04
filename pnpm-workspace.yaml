@@ -10,6 +10,7 @@ allowBuilds:
 # Pnpm-specific rules
 minimumReleaseAge: 10080
 blockExoticSubdeps: false
+nodeLinker: hoisted
 
 # Overrides
 overrides:

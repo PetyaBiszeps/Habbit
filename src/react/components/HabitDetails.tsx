@@ -1,6 +1,16 @@
-export function HabitDetails({ habit, onDeleteHabit, onDeleteDay, children }) {
+import type { ReactNode } from 'react';
+import type { Habit } from '../types';
+
+type HabitDetailsProps = {
+    habit: Habit | null;
+    onDeleteHabit: () => void;
+    onDeleteDay: (dayIndex: number) => void;
+    children: ReactNode;
+};
+
+export function HabitDetails({ habit, onDeleteHabit, onDeleteDay, children }: HabitDetailsProps) {
     const progress = habit
-        ? Math.min(habit.days.length / habit.target * 100, 100)
+        ? Math.min(habit.days.length / Number(habit.target) * 100, 100)
         : 0;
 
     return (

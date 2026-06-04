@@ -1,5 +1,7 @@
+import type { Habit } from './react/types';
+
 const HABIT_KEY = 'HABIT_KEY';
-const HABIT_DEFAULT_VALUE = [
+const HABIT_DEFAULT_VALUE: Habit[] = [
     {
         "id": 1,
         "icon": "Sport",
@@ -22,14 +24,19 @@ const HABIT_DEFAULT_VALUE = [
         "days": []
     }];
 
-export function seedDefaults() {
+export function seedDefaults(): void {
     if (!localStorage.getItem(HABIT_KEY)) {
         localStorage.setItem(HABIT_KEY, JSON.stringify(HABIT_DEFAULT_VALUE));
     }
 }
 
-export function loadHabits() {
+export function loadHabits(): Habit[] {
     const habitsString = localStorage.getItem(HABIT_KEY);
+
+    if (!habitsString) {
+        return [];
+    }
+
     const habitArray = JSON.parse(habitsString);
 
     if (Array.isArray(habitArray)) {
@@ -39,6 +46,6 @@ export function loadHabits() {
     return [];
 }
 
-export function saveHabits(habits) {
+export function saveHabits(habits: Habit[]): void {
     localStorage.setItem(HABIT_KEY, JSON.stringify(habits));
 }

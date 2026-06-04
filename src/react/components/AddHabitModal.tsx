@@ -1,19 +1,29 @@
 import { useState } from 'react';
+import type { AddHabitPayload } from '../types';
 
 const ICONS = ['Sport', 'Water', 'Food'];
 
-export function AddHabitModal({ onAddHabit }) {
+type AddHabitModalProps = {
+    onAddHabit: (payload: AddHabitPayload) => void;
+};
+
+type FormErrors = {
+    name?: boolean;
+    target?: boolean;
+};
+
+export function AddHabitModal({ onAddHabit }: AddHabitModalProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [name, setName] = useState('');
     const [target, setTarget] = useState('');
     const [icon, setIcon] = useState('Sport');
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<FormErrors>({});
 
     function close() {
         setIsOpen(false);
     }
 
-    function handleSubmit(event) {
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         const nextErrors = {
