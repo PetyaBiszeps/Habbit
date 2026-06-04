@@ -1,3 +1,3 @@
 export function App() {
-    return null;
+    return <img alt="App Logo" src="svg/Logo.svg" />;
 }
