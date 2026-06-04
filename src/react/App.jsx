@@ -1,19 +1,32 @@
-export function App() {
+import { HabitDetails } from './components/HabitDetails.jsx';
+import { HabitList } from './components/HabitList.jsx';
+
+export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay }) {
+    const activeHabit = habits.find(habit => habit.id === activeHabitId) ?? null;
+
     return (
         <div className="app">
             <div className="panel">
                 <img alt="App Logo" className="logo" src="svg/Logo.svg" />
                 <nav className="menu">
-                    <div className="menu__list"></div>
+                    <div className="menu__list">
+                        <HabitList
+                            activeHabitId={activeHabitId}
+                            habits={habits}
+                            onSelectHabit={onSelectHabit}
+                        />
+                    </div>
                     <button className="menu__add">
                         <img alt="Add" src="svg/Add.svg" />
                     </button>
                 </nav>
             </div>
             <div className="content">
-                <div id="habit-header-root"></div>
-                <main>
-                    <div id="days"></div>
+                <HabitDetails
+                    habit={activeHabit}
+                    onDeleteDay={onDeleteDay}
+                    onDeleteHabit={onDeleteHabit}
+                >
                     <div className="habit">
                         <div className="habit__day">Day 2</div>
                         <form className="habit__form">
@@ -22,9 +35,7 @@ export function App() {
                             <button className="button" type="submit">Submit</button>
                         </form>
                     </div>
-                </main>
-                <div id="habit-footer-root"></div>
-                <div id="habit-details-react-root"></div>
+                </HabitDetails>
             </div>
             <div className="cover cover_hidden" id="add-habit-popup">
                 <div className="popup">

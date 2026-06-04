@@ -1,10 +1,10 @@
-import { mountReactShell, renderHabitDetails, renderHabitList } from './react/main.jsx';
+import { renderHabbitApp } from './react/main.jsx';
 import { loadHabits, saveHabits, seedDefaults } from './habitStorage.js';
-
-mountReactShell();
 
 let habits = [];
 let globalActiveHabitId;
+
+renderReactApp();
 
 const page = {
     menu: document.querySelector('.menu__list'),
@@ -81,22 +81,15 @@ function rerender(activeHabitId) {
 
     document.location.replace(document.location.pathname + '#' + activeHabitId);
 
-    rerenderNav(activeHabit);
-    rerenderDetails(activeHabit);
+    renderReactApp(activeHabit.id);
     rerenderContent(activeHabit);
 }
 
-function rerenderNav(activeHabit) {
-    renderHabitList({
+function renderReactApp(activeHabitId = globalActiveHabitId) {
+    renderHabbitApp({
         habits,
-        activeHabitId: activeHabit.id,
+        activeHabitId,
         onSelectHabit: rerender,
-    });
-}
-
-function rerenderDetails(activeHabit) {
-    renderHabitDetails({
-        habit: activeHabit,
         onDeleteHabit: deleteHabit,
         onDeleteDay: deleteDays,
     });
@@ -216,16 +209,7 @@ function deleteHabit() {
         rerender(habits[0].id);
     } else {
         globalActiveHabitId = undefined;
-        renderHabitList({
-            habits,
-            activeHabitId: undefined,
-            onSelectHabit: rerender,
-        });
-        renderHabitDetails({
-            habit: null,
-            onDeleteHabit: deleteHabit,
-            onDeleteDay: deleteDays,
-        });
+        renderReactApp(undefined);
         page.content.nextDay.innerHTML = '';
     }
 
