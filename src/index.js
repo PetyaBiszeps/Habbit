@@ -102,7 +102,7 @@ function rerenderNav(activeHabit) {
             element.setAttribute('menu-habit-id', habit.id);
             element.classList.add('menu__item');
             element.addEventListener('click', () => rerender(habit.id));
-            element.innerHTML = `<img alt="${habit.name}" src="../src/assets/svg/${habit.icon}.svg">`;
+            element.innerHTML = `<img alt="${habit.name}" src="svg/${habit.icon}.svg">`;
 
             if (activeHabit.id === habit.id) {
                 element.classList.add('menu__item_active');
@@ -142,7 +142,7 @@ function rerenderContent(activeHabit) {
                                 <div class="habit__day">Day ${Number(index) + 1}</div>
                                 <div class="habit__comment">${activeHabit.days[index].comment}</div>
                                 <button class="habit__delete" data-day-index="${index}">
-                                    <img alt="Delete Day ${index + 1}" src="../src/assets/svg/Delete.svg">
+                                    <img alt="Delete Day ${index + 1}" src="svg/Delete.svg">
                                 </button>`;
         page.content.daysContainer.appendChild(element);
     }
