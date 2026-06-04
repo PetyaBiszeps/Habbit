@@ -1,175 +1,175 @@
-import { useEffect, useState } from 'react';
-import { loadHabits, saveHabits, seedDefaults } from '../habitStorage';
-import { AddDayForm } from './components/AddDayForm';
-import { AddHabitModal } from './components/AddHabitModal';
-import { HabitDetails } from './components/HabitDetails';
-import { HabitList } from './components/HabitList';
-import type { AddDayPayload, AddHabitPayload, Habit } from './types';
+import { useEffect, useState } from 'react'
+import { loadHabits, saveHabits, seedDefaults } from '../habitStorage'
+import { AddDayForm } from './components/AddDayForm'
+import { AddHabitModal } from './components/AddHabitModal'
+import { HabitDetails } from './components/HabitDetails'
+import { HabitList } from './components/HabitList'
+import type { AddDayPayload, AddHabitPayload, Habit } from './types'
 
 type AppState = {
-    habits: Habit[];
-    activeHabitId?: number;
-};
+  habits: Habit[];
+  activeHabitId?: number;
+}
 
 function loadInitialState(): AppState {
-    seedDefaults();
+  seedDefaults()
 
-    const habits = loadHabits();
-    const hashId = Number(document.location.hash.replace('#', ''));
-    const urlHabit = habits.find(habit => habit.id === hashId);
+  const habits = loadHabits()
+  const hashId = Number(document.location.hash.replace('#', ''))
+  const urlHabit = habits.find(habit => habit.id === hashId)
 
-    return {
-        habits,
-        activeHabitId: urlHabit?.id ?? habits[0]?.id,
-    };
+  return {
+    habits,
+    activeHabitId: urlHabit?.id ?? habits[0]?.id
+  }
 }
 
 function setLocationHash(activeHabitId: number | undefined) {
-    if (activeHabitId !== undefined) {
-        document.location.replace(document.location.pathname + '#' + activeHabitId);
-    }
+  if (activeHabitId !== undefined) {
+    document.location.replace(document.location.pathname + '#' + activeHabitId)
+  }
 }
 
 export function App() {
-    const [state, setState] = useState(loadInitialState);
-    const { habits, activeHabitId } = state;
-    const activeHabit = habits.find(habit => habit.id === activeHabitId) ?? null;
+  const [state, setState] = useState(loadInitialState)
+  const { habits, activeHabitId } = state
+  const activeHabit = habits.find(habit => habit.id === activeHabitId) ?? null
 
-    useEffect(() => {
-        setLocationHash(activeHabitId);
-    }, [activeHabitId]);
+  useEffect(() => {
+    setLocationHash(activeHabitId)
+  }, [activeHabitId])
 
-    function selectHabit(habitId: number) {
-        const activeHabit = habits.find(habit => habit.id === habitId);
+  function selectHabit(habitId: number) {
+    const activeHabit = habits.find(habit => habit.id === habitId)
 
-        if (!activeHabit) {
-            return;
-        }
-
-        setState(current => ({...current, activeHabitId: activeHabit.id}));
+    if (!activeHabit) {
+      return
     }
 
-    function addHabit({name, target, icon}: AddHabitPayload) {
-        if (!name || !target || !icon) {
-            return;
-        }
+    setState(current => ({ ...current, activeHabitId: activeHabit.id }))
+  }
 
-        setState(current => {
-            const maxId = current.habits.reduce((acc, habit) => acc > habit.id ? acc : habit.id, 0);
-            const newHabit = {
-                id: maxId + 1,
-                name,
-                target,
-                icon,
-                days: []
-            };
-            const nextHabits = current.habits.concat([newHabit]);
-
-            saveHabits(nextHabits);
-            return {
-                habits: nextHabits,
-                activeHabitId: newHabit.id,
-            };
-        });
+  function addHabit({ name, target, icon }: AddHabitPayload) {
+    if (!name || !target || !icon) {
+      return
     }
 
-    function deleteHabit() {
-        if (activeHabitId === undefined) {
-            return;
-        }
+    setState(current => {
+      const maxId = current.habits.reduce((acc, habit) => acc > habit.id ? acc : habit.id, 0)
+      const newHabit = {
+        id: maxId + 1,
+        name,
+        target,
+        icon,
+        days: []
+      }
+      const nextHabits = current.habits.concat([newHabit])
 
-        setState(current => {
-            const nextHabits = current.habits.filter(habit => habit.id !== current.activeHabitId);
-            const nextActiveHabitId = nextHabits[0]?.id;
+      saveHabits(nextHabits)
+      return {
+        habits: nextHabits,
+        activeHabitId: newHabit.id
+      }
+    })
+  }
 
-            saveHabits(nextHabits);
-            return {
-                habits: nextHabits,
-                activeHabitId: nextActiveHabitId,
-            };
-        });
+  function deleteHabit() {
+    if (activeHabitId === undefined) {
+      return
     }
 
-    function addDay({comment}: AddDayPayload) {
-        if (!comment || activeHabitId === undefined) {
-            return;
-        }
+    setState(current => {
+      const nextHabits = current.habits.filter(habit => habit.id !== current.activeHabitId)
+      const nextActiveHabitId = nextHabits[0]?.id
 
-        setState(current => {
-            const nextHabits = current.habits.map(habit => {
-                if (habit.id === current.activeHabitId) {
-                    return {
-                        ...habit,
-                        days: habit.days.concat([{comment}])
-                    };
-                }
+      saveHabits(nextHabits)
+      return {
+        habits: nextHabits,
+        activeHabitId: nextActiveHabitId
+      }
+    })
+  }
 
-                return habit;
-            });
-
-            saveHabits(nextHabits);
-
-            return {
-                ...current,
-                habits: nextHabits,
-            };
-        });
+  function addDay({ comment }: AddDayPayload) {
+    if (!comment || activeHabitId === undefined) {
+      return
     }
 
-    function deleteDay(dayIndex: number) {
-        if (activeHabitId === undefined) {
-            return;
+    setState(current => {
+      const nextHabits = current.habits.map(habit => {
+        if (habit.id === current.activeHabitId) {
+          return {
+            ...habit,
+            days: habit.days.concat([{ comment }])
+          }
         }
 
-        setState(current => {
-            const nextHabits = current.habits.map(habit => {
-                if (habit.id === current.activeHabitId) {
-                    return {
-                        ...habit,
-                        days: habit.days.filter((_day, index) => index !== dayIndex)
-                    };
-                }
+        return habit
+      })
 
-                return habit;
-            });
+      saveHabits(nextHabits)
 
-            saveHabits(nextHabits);
+      return {
+        ...current,
+        habits: nextHabits
+      }
+    })
+  }
 
-            return {
-                ...current,
-                habits: nextHabits,
-            };
-        });
+  function deleteDay(dayIndex: number) {
+    if (activeHabitId === undefined) {
+      return
     }
 
-    return (
-        <div className="app">
-            <div className="panel">
-                <img alt="App Logo" className="logo" src="svg/Logo.svg" />
-                <nav className="menu">
-                    <div className="menu__list">
-                        <HabitList
-                            activeHabitId={activeHabitId}
-                            habits={habits}
-                            onSelectHabit={selectHabit}
-                        />
-                    </div>
-                    <AddHabitModal onAddHabit={addHabit} />
-                </nav>
-            </div>
-            <div className="content">
-                <HabitDetails
-                    habit={activeHabit}
-                    onDeleteDay={deleteDay}
-                    onDeleteHabit={deleteHabit}
-                >
-                    <AddDayForm
-                        dayNumber={(activeHabit?.days.length ?? 0) + 1}
-                        disabled={!activeHabit}
-                        onAddDay={addDay}
-                    />
-                </HabitDetails>
-            </div>
-        </div>
-    );
+    setState(current => {
+      const nextHabits = current.habits.map(habit => {
+        if (habit.id === current.activeHabitId) {
+          return {
+            ...habit,
+            days: habit.days.filter((_day, index) => index !== dayIndex)
+          }
+        }
+
+        return habit
+      })
+
+      saveHabits(nextHabits)
+
+      return {
+        ...current,
+        habits: nextHabits
+      }
+    })
+  }
+
+  return (
+    <div className="app">
+      <div className="panel">
+        <img alt="App Logo" className="logo" src="svg/Logo.svg" />
+        <nav className="menu">
+          <div className="menu__list">
+            <HabitList
+              activeHabitId={activeHabitId}
+              habits={habits}
+              onSelectHabit={selectHabit}
+            />
+          </div>
+          <AddHabitModal onAddHabit={addHabit} />
+        </nav>
+      </div>
+      <div className="content">
+        <HabitDetails
+          habit={activeHabit}
+          onDeleteDay={deleteDay}
+          onDeleteHabit={deleteHabit}
+        >
+          <AddDayForm
+            dayNumber={(activeHabit?.days.length ?? 0) + 1}
+            disabled={!activeHabit}
+            onAddDay={addDay}
+          />
+        </HabitDetails>
+      </div>
+    </div>
+  )
 }
