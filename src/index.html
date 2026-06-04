@@ -16,7 +16,7 @@
         <img alt="App Logo" class="logo" src="../src/assets/svg/Logo.svg">
         <nav class="menu">
             <div class="menu__list"></div>
-            <button class="menu__add" onclick="togglePopup()">
+            <button class="menu__add">
                 <img alt="Add" src="../src/assets/svg/Add.svg">
             </button>
         </nav>
@@ -38,7 +38,7 @@
             <div id="days"></div>
             <div class="habit">
                 <div class="habit__day">Day 2</div>
-                <form class="habit__form" onsubmit="addDays(event)">
+                <form class="habit__form">
                     <input class="input_icon" name="comment" placeholder="Comment" type="text">
                     <img alt="Comment logo" class="input__icon" src="../src/assets/svg/Comment.svg">
                     <button class="button" type="submit">Submit</button>
@@ -46,7 +46,7 @@
             </div>
         </main>
         <footer>
-            <button class="del-button" onclick="deleteHabit(event)">Delete habit</button>
+            <button class="del-button">Delete habit</button>
         </footer>
     </div>
     <div class="cover cover_hidden" id="add-habit-popup">
@@ -54,29 +54,30 @@
             <h2>New Habit</h2>
             <div class="icon-label">Icon</div>
             <div class="icon-select">
-                <button class="icon icon_active" onclick="setIcon(this, 'Sport')">
+                <button class="icon icon_active" data-icon="Sport">
                     <img alt="Sport" src="../src/assets/svg/Sport.svg">
                 </button>
-                <button class="icon" onclick="setIcon(this, 'Water')">
+                <button class="icon" data-icon="Water">
                     <img alt="Water" src="../src/assets/svg/Water.svg">
                 </button>
-                <button class="icon" onclick="setIcon(this, 'Food')">
+                <button class="icon" data-icon="Food">
                     <img alt="Food" src="../src/assets/svg/Food.svg">
                 </button>
             </div>
-            <form class="popup__form" onsubmit="addHabit(event)">
+            <form class="popup__form">
                 <input name="name" placeholder="Name" type="text">
                 <input hidden name="icon" placeholder="icon" type="text" value="Sport">
                 <input name="target" placeholder="Goal" type="number">
                 <button class="button" type="submit">Add</button>
             </form>
-            <button class="popup__close" onclick="togglePopup()">
+            <button class="popup__close">
                 <img alt="Close popup" src="../src/assets/svg/Close.svg">
             </button>
         </div>
     </div>
 </div>
 
+<script src="habitStorage.js"></script>
 <script src="index.js"></script>
 </body>
 </html>

@@ -1,33 +1,10 @@
+(() => {
 let habits = [];
 let globalActiveHabitId;
 
-/* Constants */
-const HABIT_KEY = 'HABIT_KEY';
-const HABIT_DEFAULT_VALUE = [
-    {
-        "id": 1,
-        "icon": "Sport",
-        "name": "Push-ups",
-        "target": 10,
-        "days": []
-    },
-    {
-        "id": 2,
-        "icon": "Water",
-        "name": "Water Balance",
-        "target": 10,
-        "days": []
-    },
-    {
-        "id": 3,
-        "icon": "Food",
-        "name": "Diet",
-        "target": 10,
-        "days": []
-    }];
-
 const page = {
     menu: document.querySelector('.menu__list'),
+    menuAdd: document.querySelector('.menu__add'),
     header: {
         h1: document.querySelector('.h1'),
         progressPercent: document.querySelector('.progress__percent'),
@@ -36,10 +13,17 @@ const page = {
     content: {
         daysContainer: document.getElementById('days'),
         nextDay: document.querySelector('.habit__day'),
+        addDayForm: document.querySelector('.habit__form'),
+    },
+    footer: {
+        deleteHabitButton: document.querySelector('.del-button'),
     },
     popup: {
         index: document.getElementById('add-habit-popup'),
         iconField: document.querySelector('.popup__form input[name="icon"]'),
+        iconSelect: document.querySelector('.icon-select'),
+        form: document.querySelector('.popup__form'),
+        close: document.querySelector('.popup__close'),
     }
 }
 
@@ -48,19 +32,6 @@ const page = {
 /* --------------------------------------------------------------------------------- */
 
 /* Utils */
-
-function loadData(key, value) {
-    const habitsString = localStorage.getItem(HABIT_KEY);
-    const habitArray = JSON.parse(habitsString);
-
-    if (Array.isArray(habitArray)) {
-        habits = habitArray;
-    }
-}
-
-function saveData() {
-    localStorage.setItem(HABIT_KEY, JSON.stringify(habits));
-}
 
 function resetForm(form, fields) {
     for (const field of fields) {
@@ -169,7 +140,7 @@ function rerenderContent(activeHabit) {
         element.innerHTML = `
                                 <div class="habit__day">Day ${Number(index) + 1}</div>
                                 <div class="habit__comment">${activeHabit.days[index].comment}</div>
-                                <button class="habit__delete" onclick="deleteDays(${index})">
+                                <button class="habit__delete" data-day-index="${index}">
                                     <img alt="Delete Day ${index + 1}" src="../src/assets/svg/Delete.svg">
                                 </button>`;
         page.content.daysContainer.appendChild(element);
@@ -209,7 +180,7 @@ function addDays(event) {
 
     rerender(globalActiveHabitId);
 
-    saveData();
+    habitStorage.saveHabits(habits);
 }
 
 function deleteDays(index) {
@@ -227,7 +198,7 @@ function deleteDays(index) {
     });
 
     rerender(globalActiveHabitId);
-    saveData();
+    habitStorage.saveHabits(habits);
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -273,7 +244,7 @@ function addHabit(event) {
 
     resetForm(event.target, ['name', 'target']);
     togglePopup();
-    saveData();
+    habitStorage.saveHabits(habits);
     rerender(maxId + 1);
 }
 
@@ -300,7 +271,41 @@ function deleteHabit() {
         page.content.nextDay.innerHTML = '';
     }
 
-    saveData();
+    habitStorage.saveHabits(habits);
+}
+
+/* --------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------- */
+
+/* Events */
+
+function bindEvents() {
+    page.menuAdd.addEventListener('click', togglePopup);
+    page.content.addDayForm.addEventListener('submit', addDays);
+    page.footer.deleteHabitButton.addEventListener('click', deleteHabit);
+    page.popup.form.addEventListener('submit', addHabit);
+    page.popup.close.addEventListener('click', togglePopup);
+
+    page.popup.iconSelect.addEventListener('click', event => {
+        const button = event.target.closest('.icon');
+
+        if (!button) {
+            return;
+        }
+
+        setIcon(button, button.dataset.icon);
+    });
+
+    page.content.daysContainer.addEventListener('click', event => {
+        const button = event.target.closest('.habit__delete');
+
+        if (!button) {
+            return;
+        }
+
+        deleteDays(Number(button.dataset.dayIndex));
+    });
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -310,11 +315,9 @@ function deleteHabit() {
 /* Init */
 
 (() => {
-    if (!localStorage.getItem(HABIT_KEY)) {
-        localStorage.setItem(HABIT_KEY, JSON.stringify(HABIT_DEFAULT_VALUE));
-    }
-
-    loadData();
+    bindEvents();
+    habitStorage.seedDefaults();
+    habits = habitStorage.loadHabits();
 
     const hashId = Number(document.location.hash.replace('#', ''));
     const urlHabit = habits.find(habit => habit.id === hashId);
@@ -324,4 +327,5 @@ function deleteHabit() {
     } else {
         rerender(habits[0].id);
     }
+})();
 })();
