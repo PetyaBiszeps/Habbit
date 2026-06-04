@@ -1,4 +1,4 @@
-import { mountReactShell } from './react/main.jsx';
+import { mountReactShell, renderHabitList } from './react/main.jsx';
 import { loadHabits, saveHabits, seedDefaults } from './habitStorage.js';
 
 mountReactShell();
@@ -96,31 +96,11 @@ function rerender(activeHabitId) {
 }
 
 function rerenderNav(activeHabit) {
-    for (const habit of habits) {
-        const existed = document.querySelector(`[menu-habit-id="${habit.id}"]`);
-
-        if (!existed) {
-            const element = document.createElement('button');
-
-            element.setAttribute('menu-habit-id', habit.id);
-            element.classList.add('menu__item');
-            element.addEventListener('click', () => rerender(habit.id));
-            element.innerHTML = `<img alt="${habit.name}" src="svg/${habit.icon}.svg">`;
-
-            if (activeHabit.id === habit.id) {
-                element.classList.add('menu__item_active');
-            }
-
-            page.menu.appendChild(element);
-            continue;
-        }
-
-        if (activeHabit.id === habit.id) {
-            existed.classList.add('menu__item_active');
-        } else {
-            existed.classList.remove('menu__item_active');
-        }
-    }
+    renderHabitList({
+        habits,
+        activeHabitId: activeHabit.id,
+        onSelectHabit: rerender,
+    });
 }
 
 function rerenderHead(activeHabit) {
@@ -259,15 +239,14 @@ function deleteHabit() {
 
     habits = habits.filter(habit => habit.id !== globalActiveHabitId);
     
-    const menuItem = document.querySelector(`[menu-habit-id="${globalActiveHabitId}"]`);
-
-    if (menuItem) {
-        menuItem.remove();
-    }
-
     if (habits.length > 0) {
         rerender(habits[0].id);
     } else {
+        renderHabitList({
+            habits,
+            activeHabitId: undefined,
+            onSelectHabit: rerender,
+        });
         page.header.h1.innerText = '';
         page.header.progressPercent.innerText = '';
         page.header.progressCoverBar.setAttribute('style', 'width: 0%');
