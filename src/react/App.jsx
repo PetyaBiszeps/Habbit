@@ -1,7 +1,8 @@
+import { AddDayForm } from './components/AddDayForm.jsx';
 import { HabitDetails } from './components/HabitDetails.jsx';
 import { HabitList } from './components/HabitList.jsx';
 
-export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay }) {
+export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay, onAddDay }) {
     const activeHabit = habits.find(habit => habit.id === activeHabitId) ?? null;
 
     return (
@@ -27,14 +28,11 @@ export function App({ habits = [], activeHabitId, onSelectHabit, onDeleteHabit, 
                     onDeleteDay={onDeleteDay}
                     onDeleteHabit={onDeleteHabit}
                 >
-                    <div className="habit">
-                        <div className="habit__day">Day 2</div>
-                        <form className="habit__form">
-                            <input className="input_icon" name="comment" placeholder="Comment" type="text" />
-                            <img alt="Comment logo" className="input__icon" src="svg/Comment.svg" />
-                            <button className="button" type="submit">Submit</button>
-                        </form>
-                    </div>
+                    <AddDayForm
+                        dayNumber={(activeHabit?.days.length ?? 0) + 1}
+                        disabled={!activeHabit}
+                        onAddDay={onAddDay}
+                    />
                 </HabitDetails>
             </div>
             <div className="cover cover_hidden" id="add-habit-popup">

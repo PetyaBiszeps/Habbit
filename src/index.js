@@ -9,10 +9,6 @@ renderReactApp();
 const page = {
     menu: document.querySelector('.menu__list'),
     menuAdd: document.querySelector('.menu__add'),
-    content: {
-        nextDay: document.querySelector('.habit__day'),
-        addDayForm: document.querySelector('.habit__form'),
-    },
     popup: {
         index: document.getElementById('add-habit-popup'),
         iconField: document.querySelector('.popup__form input[name="icon"]'),
@@ -82,7 +78,6 @@ function rerender(activeHabitId) {
     document.location.replace(document.location.pathname + '#' + activeHabitId);
 
     renderReactApp(activeHabit.id);
-    rerenderContent(activeHabit);
 }
 
 function renderReactApp(activeHabitId = globalActiveHabitId) {
@@ -92,11 +87,8 @@ function renderReactApp(activeHabitId = globalActiveHabitId) {
         onSelectHabit: rerender,
         onDeleteHabit: deleteHabit,
         onDeleteDay: deleteDays,
+        onAddDay: addDays,
     });
-}
-
-function rerenderContent(activeHabit) {
-    page.content.nextDay.innerHTML = `Day ${activeHabit.days.length + 1}`;
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -105,28 +97,21 @@ function rerenderContent(activeHabit) {
 
 /* Days API */
 
-function addDays(event) {
-    event.preventDefault();
-
-    const data = validateAndGetFormData(event.target, ['comment']);
-
-    if (!data) {
+function addDays({comment}) {
+    if (!comment || globalActiveHabitId === undefined) {
         return;
     }
-
 
     habits = habits.map(habit => {
         if (habit.id === globalActiveHabitId) {
             return {
                 ...habit,
-                days: habit.days.concat([{comment: data.comment}])
+                days: habit.days.concat([{comment}])
             }
         }
 
         return habit;
     });
-
-    resetForm(event.target, ['comment']);
 
     rerender(globalActiveHabitId);
 
@@ -210,7 +195,6 @@ function deleteHabit() {
     } else {
         globalActiveHabitId = undefined;
         renderReactApp(undefined);
-        page.content.nextDay.innerHTML = '';
     }
 
     saveHabits(habits);
@@ -224,7 +208,6 @@ function deleteHabit() {
 
 function bindEvents() {
     page.menuAdd.addEventListener('click', togglePopup);
-    page.content.addDayForm.addEventListener('submit', addDays);
     page.popup.form.addEventListener('submit', addHabit);
     page.popup.close.addEventListener('click', togglePopup);
 

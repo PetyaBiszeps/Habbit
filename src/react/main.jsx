@@ -4,7 +4,7 @@ import { App } from './App.jsx';
 
 let habbitAppRoot;
 
-export function renderHabbitApp({ habits, activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay }) {
+export function renderHabbitApp({ habits, activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay, onAddDay }) {
     const reactRoot = document.getElementById('react-root');
 
     if (!reactRoot) {
@@ -22,6 +22,7 @@ export function renderHabbitApp({ habits, activeHabitId, onSelectHabit, onDelete
                 habits={habits}
                 onDeleteDay={onDeleteDay}
                 onDeleteHabit={onDeleteHabit}
+                onAddDay={onAddDay}
                 onSelectHabit={onSelectHabit}
             />
         );
