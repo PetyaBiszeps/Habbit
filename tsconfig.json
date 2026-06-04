@@ -1,19 +1,40 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    // Global
+    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+
+    // Compile options
     "noEmit": true,
-    "jsx": "react-jsx"
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // TS
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // JSX
+    "jsx": "preserve",
+    "jsxImportSource": "react",
+
+    // Alias
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "ignoreDeprecations": "6.0"   // ALERT: TypeScript 7.0 will break baseUrl
   },
-  "include": ["src/index.ts", "src/habitStorage.ts", "src/react"]
+  "include": [
+    "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue",
+    "vite.config.ts", "eslint.config.mjs", "env.d.ts"
+  ]
 }

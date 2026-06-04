@@ -126,7 +126,7 @@ export function App() {
                 if (habit.id === current.activeHabitId) {
                     return {
                         ...habit,
-                        days: habit.days.filter((day, index) => index !== dayIndex)
+                        days: habit.days.filter((_day, index) => index !== dayIndex)
                     };
                 }
 
