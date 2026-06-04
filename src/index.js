@@ -1,3 +1,4 @@
+import './react/main.jsx';
 import { loadHabits, saveHabits, seedDefaults } from './habitStorage.js';
 
 let habits = [];
