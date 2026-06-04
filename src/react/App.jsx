@@ -11,18 +11,7 @@ export function App() {
                 </nav>
             </div>
             <div className="content">
-                <header>
-                    <h1 className="h1">-</h1>
-                    <div className="progress">
-                        <div className="progress__text">
-                            <p className="progress__name">Progress</p>
-                            <p className="progress__percent">%</p>
-                        </div>
-                        <div className="progress__bar">
-                            <div className="progress__cover_bar"></div>
-                        </div>
-                    </div>
-                </header>
+                <div id="habit-header-root"></div>
                 <main>
                     <div id="days"></div>
                     <div className="habit">
@@ -34,9 +23,8 @@ export function App() {
                         </form>
                     </div>
                 </main>
-                <footer>
-                    <button className="del-button">Delete habit</button>
-                </footer>
+                <div id="habit-footer-root"></div>
+                <div id="habit-details-react-root"></div>
             </div>
             <div className="cover cover_hidden" id="add-habit-popup">
                 <div className="popup">

@@ -1,4 +1,4 @@
-import { mountReactShell, renderHabitList } from './react/main.jsx';
+import { mountReactShell, renderHabitDetails, renderHabitList } from './react/main.jsx';
 import { loadHabits, saveHabits, seedDefaults } from './habitStorage.js';
 
 mountReactShell();
@@ -9,18 +9,9 @@ let globalActiveHabitId;
 const page = {
     menu: document.querySelector('.menu__list'),
     menuAdd: document.querySelector('.menu__add'),
-    header: {
-        h1: document.querySelector('.h1'),
-        progressPercent: document.querySelector('.progress__percent'),
-        progressCoverBar: document.querySelector('.progress__cover_bar'),
-    },
     content: {
-        daysContainer: document.getElementById('days'),
         nextDay: document.querySelector('.habit__day'),
         addDayForm: document.querySelector('.habit__form'),
-    },
-    footer: {
-        deleteHabitButton: document.querySelector('.del-button'),
     },
     popup: {
         index: document.getElementById('add-habit-popup'),
@@ -91,7 +82,7 @@ function rerender(activeHabitId) {
     document.location.replace(document.location.pathname + '#' + activeHabitId);
 
     rerenderNav(activeHabit);
-    rerenderHead(activeHabit);
+    rerenderDetails(activeHabit);
     rerenderContent(activeHabit);
 }
 
@@ -103,33 +94,15 @@ function rerenderNav(activeHabit) {
     });
 }
 
-function rerenderHead(activeHabit) {
-    // Section Name
-    page.header.h1.innerText = activeHabit.name;
-
-    // Progress Bar
-    const progress = activeHabit.days.length / activeHabit.target > 1
-        ? 100
-        : activeHabit.days.length / activeHabit.target * 100;
-    page.header.progressPercent.innerText = progress.toFixed(0) + '%';
-    page.header.progressCoverBar.setAttribute('style', `width: ${progress}%`)
+function rerenderDetails(activeHabit) {
+    renderHabitDetails({
+        habit: activeHabit,
+        onDeleteHabit: deleteHabit,
+        onDeleteDay: deleteDays,
+    });
 }
 
 function rerenderContent(activeHabit) {
-    page.content.daysContainer.innerHTML = '';
-
-    for (const index in activeHabit.days) {
-        const element = document.createElement('div');
-        element.classList.add('habit');
-        element.innerHTML = `
-                                <div class="habit__day">Day ${Number(index) + 1}</div>
-                                <div class="habit__comment">${activeHabit.days[index].comment}</div>
-                                <button class="habit__delete" data-day-index="${index}">
-                                    <img alt="Delete Day ${index + 1}" src="svg/Delete.svg">
-                                </button>`;
-        page.content.daysContainer.appendChild(element);
-    }
-
     page.content.nextDay.innerHTML = `Day ${activeHabit.days.length + 1}`;
 }
 
@@ -242,15 +215,17 @@ function deleteHabit() {
     if (habits.length > 0) {
         rerender(habits[0].id);
     } else {
+        globalActiveHabitId = undefined;
         renderHabitList({
             habits,
             activeHabitId: undefined,
             onSelectHabit: rerender,
         });
-        page.header.h1.innerText = '';
-        page.header.progressPercent.innerText = '';
-        page.header.progressCoverBar.setAttribute('style', 'width: 0%');
-        page.content.daysContainer.innerHTML = '';
+        renderHabitDetails({
+            habit: null,
+            onDeleteHabit: deleteHabit,
+            onDeleteDay: deleteDays,
+        });
         page.content.nextDay.innerHTML = '';
     }
 
@@ -266,7 +241,6 @@ function deleteHabit() {
 function bindEvents() {
     page.menuAdd.addEventListener('click', togglePopup);
     page.content.addDayForm.addEventListener('submit', addDays);
-    page.footer.deleteHabitButton.addEventListener('click', deleteHabit);
     page.popup.form.addEventListener('submit', addHabit);
     page.popup.close.addEventListener('click', togglePopup);
 
@@ -280,15 +254,6 @@ function bindEvents() {
         setIcon(button, button.dataset.icon);
     });
 
-    page.content.daysContainer.addEventListener('click', event => {
-        const button = event.target.closest('.habit__delete');
-
-        if (!button) {
-            return;
-        }
-
-        deleteDays(Number(button.dataset.dayIndex));
-    });
 }
 
 /* --------------------------------------------------------------------------------- */

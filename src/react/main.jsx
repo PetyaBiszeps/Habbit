@@ -1,9 +1,11 @@
 import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { App } from './App.jsx';
+import { HabitDetails } from './components/HabitDetails.jsx';
 import { HabitList } from './components/HabitList.jsx';
 
 let habitListRoot;
+let habitDetailsRoot;
 
 export function mountReactShell() {
     const reactRoot = document.getElementById('react-root');
@@ -31,6 +33,26 @@ export function renderHabitList({ habits, activeHabitId, onSelectHabit }) {
             activeHabitId={activeHabitId}
             habits={habits}
             onSelectHabit={onSelectHabit}
+        />
+    );
+}
+
+export function renderHabitDetails({ habit, onDeleteHabit, onDeleteDay }) {
+    const habitDetailsElement = document.getElementById('habit-details-react-root');
+
+    if (!habitDetailsElement) {
+        return;
+    }
+
+    if (!habitDetailsRoot) {
+        habitDetailsRoot = createRoot(habitDetailsElement);
+    }
+
+    habitDetailsRoot.render(
+        <HabitDetails
+            habit={habit}
+            onDeleteDay={onDeleteDay}
+            onDeleteHabit={onDeleteHabit}
         />
     );
 }
