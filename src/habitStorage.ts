@@ -1,4 +1,4 @@
-import type { Habit } from './react/types'
+import type { Habit } from '@/react/types.ts'
 
 const HABIT_KEY = 'HABIT_KEY'
 const HABIT_DEFAULT_VALUE: Habit[] = [

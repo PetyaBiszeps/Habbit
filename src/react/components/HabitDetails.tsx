@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { Habit } from '../types'
+import type { Habit } from '@/react/types.ts'
 
 type HabitDetailsProps = {
   habit: Habit | null;

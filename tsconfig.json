@@ -34,7 +34,7 @@
     "ignoreDeprecations": "6.0"   // ALERT: TypeScript 7.0 will break baseUrl
   },
   "include": [
-    "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue",
+    "src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts",
     "vite.config.ts", "eslint.config.mjs", "env.d.ts"
   ]
 }

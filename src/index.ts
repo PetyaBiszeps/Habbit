@@ -1,1 +1,1 @@
-import './react/main'
+import '@/react/main.tsx'

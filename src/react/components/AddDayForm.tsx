@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { AddDayPayload } from '../types'
+import type { AddDayPayload } from '@/react/types.ts'
 
 type AddDayFormProps = {
   dayNumber: number;
