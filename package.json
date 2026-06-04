@@ -1,7 +1,8 @@
 {
   "name": "habbit",
-  "productName": "Habbit",
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "type": "module",
+  "private": false,
   "description": "A simple app to track your habits!",
   "main": "src/app.js",
   "scripts": {
@@ -11,8 +12,13 @@
     "build:renderer": "vite build",
     "package": "npm run build:renderer && electron-forge package",
     "make": "npm run build:renderer && electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "lint:fix": "echo \"No linting configured\""
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "1.0.1",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   },
   "devDependencies": {
     "@electron-forge/cli": "7.11.2",
@@ -22,7 +28,7 @@
     "@electron-forge/maker-zip": "7.11.2",
     "@electron-forge/plugin-auto-unpack-natives": "7.11.2",
     "@electron-forge/plugin-fuses": "7.11.2",
-    "@electron/fuses": "2.1.1",
+    "@electron/fuses": "1.8.0",
     "@vitejs/plugin-react": "6.0.2",
     "concurrently": "10.0.0",
     "cross-env": "10.1.0",
@@ -30,16 +36,7 @@
     "vite": "8.0.14",
     "wait-on": "9.0.10"
   },
-  "keywords": [],
-  "author": "Yaroslav Petrov <PersonalYP00@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "electron-squirrel-startup": "1.0.1",
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
-  },
-  "build": {
-    "appId": "com.no1.cares.tbh"
-  },
+  "author": "YP00",
+  "license": "UNLICENSED",
   "packageManager": "pnpm@11.5.1+sha512.93f7b57422ea7068257235b4c16eb60762eb68e1dc23723199cc739043ea9be2c4143274a399d8c6defa2b1176226d9ca1c4b63482d6200c1a8fbaa78c1d1485"
 }

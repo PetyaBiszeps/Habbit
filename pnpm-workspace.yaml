@@ -10,3 +10,8 @@ allowBuilds:
 # Pnpm-specific rules
 minimumReleaseAge: 10080
 blockExoticSubdeps: false
+
+# Overrides
+overrides:
+  tar: 7.5.11
+  tmp: 0.2.6
