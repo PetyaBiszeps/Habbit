@@ -1,4 +1,5 @@
-(() => {
+import { loadHabits, saveHabits, seedDefaults } from './habitStorage.js';
+
 let habits = [];
 let globalActiveHabitId;
 
@@ -180,7 +181,7 @@ function addDays(event) {
 
     rerender(globalActiveHabitId);
 
-    habitStorage.saveHabits(habits);
+    saveHabits(habits);
 }
 
 function deleteDays(index) {
@@ -198,7 +199,7 @@ function deleteDays(index) {
     });
 
     rerender(globalActiveHabitId);
-    habitStorage.saveHabits(habits);
+    saveHabits(habits);
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -244,7 +245,7 @@ function addHabit(event) {
 
     resetForm(event.target, ['name', 'target']);
     togglePopup();
-    habitStorage.saveHabits(habits);
+    saveHabits(habits);
     rerender(maxId + 1);
 }
 
@@ -271,7 +272,7 @@ function deleteHabit() {
         page.content.nextDay.innerHTML = '';
     }
 
-    habitStorage.saveHabits(habits);
+    saveHabits(habits);
 }
 
 /* --------------------------------------------------------------------------------- */
@@ -316,8 +317,8 @@ function bindEvents() {
 
 (() => {
     bindEvents();
-    habitStorage.seedDefaults();
-    habits = habitStorage.loadHabits();
+    seedDefaults();
+    habits = loadHabits();
 
     const hashId = Number(document.location.hash.replace('#', ''));
     const urlHabit = habits.find(habit => habit.id === hashId);
@@ -327,5 +328,4 @@ function bindEvents() {
     } else {
         rerender(habits[0].id);
     }
-})();
 })();
