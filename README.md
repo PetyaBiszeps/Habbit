@@ -12,7 +12,7 @@ Current stack:
 
 * Electron
 * React
-* JavaScript
+* TypeScript
 * Vite
 * CSS
 
