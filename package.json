@@ -1,6 +1,6 @@
 {
-  "name": "habittracker",
-  "productName": "HABIT",
+  "name": "habbit",
+  "productName": "Habbit",
   "version": "1.0.0",
   "description": "A simple app to track your habits!",
   "main": "src/app.js",

@@ -310,7 +310,10 @@ function deleteHabit() {
 /* Init */
 
 (() => {
-    localStorage.setItem(HABIT_KEY, JSON.stringify(HABIT_DEFAULT_VALUE));
+    if (!localStorage.getItem(HABIT_KEY)) {
+        localStorage.setItem(HABIT_KEY, JSON.stringify(HABIT_DEFAULT_VALUE));
+    }
+
     loadData();
 
     const hashId = Number(document.location.hash.replace('#', ''));
