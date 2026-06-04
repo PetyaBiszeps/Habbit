@@ -53,11 +53,3 @@ Package the app:
 ```bash
 pnpm run package
 ```
-
-## Status
-
-This project is currently being refactored and modernized step by step.
-
-## License
-
-The Unlicense
