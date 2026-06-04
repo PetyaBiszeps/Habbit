@@ -11,9 +11,9 @@ Habbit is an old pet project that is being gradually modernized from plain HTML/
 Current stack:
 
 * Electron
-* Vite
 * React
 * JavaScript
+* Vite
 * CSS
 
 ## Features
@@ -33,25 +33,25 @@ Current stack:
 Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 Run the app:
 
 ```bash
-npm start
+pnpm start
 ```
 
 Build the renderer:
 
 ```bash
-npm run build:renderer
+pnpm run build:renderer
 ```
 
 Package the app:
 
 ```bash
-npm run package
+pnpm run package
 ```
 
 ## Status
