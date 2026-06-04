@@ -1,31 +1,8 @@
-import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { App } from './App.jsx';
 
-let habbitAppRoot;
+const reactRoot = document.getElementById('react-root');
 
-export function renderHabbitApp({ habits, activeHabitId, onSelectHabit, onDeleteHabit, onDeleteDay, onAddDay, onAddHabit }) {
-    const reactRoot = document.getElementById('react-root');
-
-    if (!reactRoot) {
-        return;
-    }
-
-    if (!habbitAppRoot) {
-        habbitAppRoot = createRoot(reactRoot);
-    }
-
-    flushSync(() => {
-        habbitAppRoot.render(
-            <App
-                activeHabitId={activeHabitId}
-                habits={habits}
-                onDeleteDay={onDeleteDay}
-                onDeleteHabit={onDeleteHabit}
-                onAddDay={onAddDay}
-                onAddHabit={onAddHabit}
-                onSelectHabit={onSelectHabit}
-            />
-        );
-    });
+if (reactRoot) {
+    createRoot(reactRoot).render(<App />);
 }
