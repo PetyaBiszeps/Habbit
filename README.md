@@ -1,14 +1,63 @@
-# Habit Tracker App
+# Habbit
 
-A simple application to let you easily track your habits.
+A simple desktop app for tracking habits and daily progress.
 
-![img.png](src/assets/screenshots/1.png)
+![Habbit screenshot](src/assets/screenshots/1.png)
 
-## Built with
+## About
 
-* HTML
-* CSS
+Habbit is an old pet project that is being gradually modernized from plain HTML/CSS/JavaScript into a React-based Electron app.
+
+Current stack:
+
+* Electron
+* Vite
+* React
 * JavaScript
-* Electron JS
+* CSS
 
-![img_1.png](src/assets/screenshots/2.png)
+## Features
+
+* Create habits
+* Choose habit icons
+* Set progress targets
+* Add daily notes
+* Track habit progress
+* Delete habits and entries
+* Save data locally between app restarts
+
+![Habbit showcase](src/assets/screenshots/2.png)
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the app:
+
+```bash
+npm start
+```
+
+Build the renderer:
+
+```bash
+npm run build:renderer
+```
+
+Package the app:
+
+```bash
+npm run package
+```
+
+## Status
+
+This project is currently being refactored and modernized step by step.
+
+## License
+
+The Unlicense
