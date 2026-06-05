@@ -1,4 +1,4 @@
-import type { Habit } from '@/react/types.ts'
+import type { Habit } from '@/renderer/types.ts'
 
 type HabitListProps = {
   habits: Habit[];

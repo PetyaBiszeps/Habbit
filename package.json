@@ -4,7 +4,7 @@
   "type": "module",
   "private": false,
   "description": "A simple app to track your habits!",
-  "main": "dist/main/app.js",
+  "main": "dist/main/main/app.js",
   "scripts": {
     "start": "concurrently -k \"pnpm dev:renderer\" \"pnpm dev:electron\"",
     "dev:renderer": "vite",

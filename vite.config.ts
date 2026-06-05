@@ -6,7 +6,7 @@ import {
 
 export default defineConfig({
   base: './',
-  root: 'src',
+  root: 'src/renderer',
   plugins: [react()],
   resolve: {
     alias: {
@@ -22,7 +22,7 @@ export default defineConfig({
     strictPort: true
   },
   build: {
-    outDir: '../dist/renderer',
+    outDir: '../../dist/renderer',
     emptyOutDir: true
   }
 })

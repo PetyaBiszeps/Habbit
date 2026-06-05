@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { loadHabits, saveHabits, seedDefaults } from '@/habitStorage.ts'
-import { AddDayForm } from '@/react/components/AddDayForm.tsx'
-import { AddHabitModal } from '@/react/components/AddHabitModal.tsx'
-import { HabitDetails } from '@/react/components/HabitDetails.tsx'
-import { HabitList } from '@/react/components/HabitList.tsx'
-import type { AddDayPayload, AddHabitPayload, Habit } from '@/react/types.ts'
+import { loadHabits, saveHabits, seedDefaults } from '@/renderer/storage/habitStorage.ts'
+import { AddDayForm } from '@/renderer/components/AddDayForm.tsx'
+import { AddHabitModal } from '@/renderer/components/AddHabitModal.tsx'
+import { HabitDetails } from '@/renderer/components/HabitDetails.tsx'
+import { HabitList } from '@/renderer/components/HabitList.tsx'
+import type { AddDayPayload, AddHabitPayload, Habit } from '@/renderer/types.ts'
 
 type AppState = {
   habits: Habit[];

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { AddHabitPayload } from '@/react/types.ts'
+import type { AddHabitPayload } from '@/renderer/types.ts'
 
 const ICONS = ['Sport', 'Water', 'Food']
 

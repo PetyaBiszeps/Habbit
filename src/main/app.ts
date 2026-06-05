@@ -17,10 +17,10 @@ const createWindow = () => {
     width: 1024,
     height: 600,
     icon: rendererDevUrl
-      ? path.join(process.cwd(), 'src/assets/ico/Icon.png')
-      : path.join(__dirname, '../renderer/ico/Icon.png'),
+      ? path.join(process.cwd(), 'src/renderer/assets/ico/Icon.png')
+      : path.join(__dirname, '../../renderer/ico/Icon.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, '../preload/preload.js'),
       contextIsolation: true,
       nodeIntegration: false
     }
@@ -29,7 +29,7 @@ const createWindow = () => {
   if (rendererDevUrl) {
     mainWindow.loadURL(rendererDevUrl)
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(path.join(__dirname, '../../renderer/index.html'))
   }
 
   //mainWindow.webContents.openDevTools();

@@ -1,32 +1,11 @@
-import type { Habit } from '@/react/types.ts'
+import { DEMO_HABITS } from '@/renderer/data/demoHabits.ts'
+import type { Habit } from '@/renderer/types.ts'
 
 const HABIT_KEY = 'HABIT_KEY'
-const HABIT_DEFAULT_VALUE: Habit[] = [
-  {
-    id: 1,
-    icon: 'Sport',
-    name: 'Push-ups',
-    target: 10,
-    days: []
-  },
-  {
-    id: 2,
-    icon: 'Water',
-    name: 'Water Balance',
-    target: 10,
-    days: []
-  },
-  {
-    id: 3,
-    icon: 'Food',
-    name: 'Diet',
-    target: 10,
-    days: []
-  }]
 
 export function seedDefaults(): void {
   if (!localStorage.getItem(HABIT_KEY)) {
-    localStorage.setItem(HABIT_KEY, JSON.stringify(HABIT_DEFAULT_VALUE))
+    localStorage.setItem(HABIT_KEY, JSON.stringify(DEMO_HABITS))
   }
 }
 
