@@ -2,7 +2,7 @@
 
 A simple desktop app for tracking habits and daily progress.
 
-![Habbit screenshot](src/assets/screenshots/1.png)
+![Habbit screenshot](src/renderer/assets/screenshots/1.png)
 
 ## About
 
@@ -26,7 +26,7 @@ Current stack:
 * Delete habits and entries
 * Save data locally between app restarts
 
-![Habbit showcase](src/assets/screenshots/2.png)
+![Habbit showcase](src/renderer/assets/screenshots/2.png)
 
 ## Development
 
