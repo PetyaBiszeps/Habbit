@@ -7,13 +7,13 @@
     "lib": ["ES2022"],
 
     // Compile options
-    "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
+    "rewriteRelativeImportExtensions": true,
     "forceConsistentCasingInFileNames": true,
 
     // TS
@@ -34,5 +34,5 @@
     "types": ["node"],
     "ignoreDeprecations": "6.0"   // ALERT: TypeScript 7.0 will break baseUrl
   },
-  "include": ["src/main/app.ts", "src/preload/preload.ts"]
+  "include": ["src/main/**/*.ts"]
 }

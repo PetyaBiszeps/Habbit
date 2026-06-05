@@ -1,4 +1,4 @@
-import createWindow from './createWindow.js'
+import createWindow from './createWindow.ts'
 import { createRequire } from 'node:module'
 import {
   app,
