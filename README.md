@@ -53,3 +53,51 @@ Package the app:
 ```bash
 pnpm run package
 ```
+
+## Build
+
+Build the Electron main process:
+
+```bash
+pnpm build:main
+```
+
+Build the renderer:
+
+```bash
+pnpm build:renderer
+```
+
+Package the app locally:
+
+```bash
+pnpm package
+```
+
+Create distributable binaries/installers:
+
+```bash
+pnpm make
+```
+
+Generated app packages are placed in out/.
+
+## Quality checks
+
+Run ESLint:
+
+```bash
+pnpm lint
+```
+
+Run TypeScript checks:
+
+```bash
+pnpm exec tsc --noEmit
+```
+
+Run dependency audit:
+
+```bash
+pnpm audit
+```

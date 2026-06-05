@@ -6,7 +6,10 @@ import {
 
 export default {
   packagerConfig: {
-    asar: true
+    asar: true,
+    name: 'Habbit',
+    icon: './public/favicon',
+    executableName: 'Habbit'
   },
   makers: [{
     name: '@electron-forge/maker-squirrel',

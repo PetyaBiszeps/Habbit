@@ -7,19 +7,11 @@ import {
 // Constants
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// Methods
-const getWindowIconPath = () => {
-  if (process.env.VITE_DEV_SERVER_URL) {
-    return path.join(process.cwd(), 'public/favicon.ico')
-  }
-  return path.join(__dirname, '../../public/favicon.ico')
-}
-
 export default async () => {
   const mainWindow = new BrowserWindow({
     width: 1024,
     height: 600,
-    icon: getWindowIconPath(),
+    icon: path.join(process.cwd(), 'public/favicon.ico'),
     webPreferences: {
       preload: path.join(__dirname, '../preload/preload.js'),
       contextIsolation: true,

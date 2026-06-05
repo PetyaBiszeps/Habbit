@@ -10,6 +10,7 @@ const require = createRequire(import.meta.url)
 if (require('electron-squirrel-startup')) {
   app.quit()
 }
+app.setName('Habbit')
 
 app.whenReady().then(async () => {
   await createWindow()
