@@ -30,7 +30,7 @@ export default async () => {
   if (process.env.VITE_DEV_SERVER_URL) {
     await mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
   } else {
-    await mainWindow.loadFile(path.join(__dirname, '../../renderer/index.html'))
+    await mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   }
 
   // mainWindow.webContents.openDevTools() --> If needed

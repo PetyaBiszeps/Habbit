@@ -1,16 +1,38 @@
 {
   "compilerOptions": {
+    // Global
     "target": "ES2022",
-    "lib": ["ES2022"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "strict": true,
+    "lib": ["ES2022"],
+
+    // Compile options
+    "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist/main",
+
+    // TS
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // JSX
+    "jsx": "preserve",
+    "jsxImportSource": "react",
+
+    // Dirs
     "rootDir": "src",
-    "types": ["node"]
+    "outDir": "dist",
+
+    // Other
+    "types": ["node"],
+    "ignoreDeprecations": "6.0"   // ALERT: TypeScript 7.0 will break baseUrl
   },
   "include": ["src/main/app.ts", "src/preload/preload.ts"]
 }
